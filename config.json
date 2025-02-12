@@ -1,0 +1,14 @@
+{
+  "wifi_ssid": "your_wifi_ssid",
+  "wifi_password": "your_wifi_password",
+  "urls": [
+    "https://murzin.tech",
+    "https://arduino.cc",
+    "https://google.com"
+  ],
+  "ips": [
+    "8.8.8.8",
+    "1.1.1.1"
+  ],
+  "interval": 30
+}
