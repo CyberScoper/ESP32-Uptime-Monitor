@@ -1,97 +1,214 @@
-# ESP32 Uptime Monitor
+🌐 ESP32 Uptime Monitor
 
-ESP32 Uptime Monitor is a project that periodically checks the availability of specified websites and IP addresses, measures response time, and displays the results in a web interface with a retro "Matrix Rain" effect.
+📡 ESP32 Uptime Monitor is a web-based uptime monitoring system for ESP32. It periodically checks websites and IPs, measures response times, and displays results in a retro-style web interface with a cool Matrix Rain effect. 💾
 
-## Features
+📖 Table of Contents
 
-- **Website and IP Monitoring** - Periodically checks the availability of websites and IPs via HTTPS.
-- **Response Time Measurement** - Displays the response time for each monitored resource.
-- **Configurable Check Interval** - The interval can be set via the configuration file or web interface.
-- **Web Interface for Management** - Add/remove sites and adjust settings easily.
-- **Matrix Rain Effect** - Retro animation effect for the background.
-- **Persistent Configuration Storage** - Saves settings in SPIFFS (`config.json`).
+✨ Features
 
-## Requirements
+🔧 Requirements
 
-- **Hardware:** ESP32 (e.g., ESP32 DevKit)
-- **Development Environment:** Arduino IDE or PlatformIO
-- **Wi-Fi:** A working Wi-Fi connection for monitoring
+📦 Dependencies
 
-## Dependencies
+📂 File Structure
+
+🚀 Installation
+
+⚙️ Configuration
+
+🖥️ Web Interface
+
+📡 API Endpoints
+
+🤝 Contributing
+
+📜 License
+
+🎉 Credits
+
+📬 Contact
+
+
+
+---
+
+✨ Features
+
+✔️ Monitors Websites & IPs – Checks availability of defined URLs and IP addresses.
+✔️ Response Time Tracking – Measures and displays response time.
+✔️ Adjustable Check Interval – Interval can be modified via web interface.
+✔️ Web Interface – Manage sites, check statuses, and change settings.
+✔️ Matrix Rain Effect – Retro-style aesthetic for a cool hacker look. 😎
+✔️ SPIFFS Storage – Saves configuration in config.json on ESP32.
+✔️ Runs Independently – No need for external servers.
+
+
+---
+
+🔧 Requirements
+
+🔹 ESP32 Development Board
+🔹 Arduino IDE (or PlatformIO)
+🔹 Wi-Fi Connection
+🔹 SPIFFS Filesystem Support
+
+
+---
+
+📦 Dependencies
 
 This project uses the following libraries:
 
-- WiFi.h
-- WiFiClientSecure.h
-- HTTPClient.h
-- WebServer.h
-- SPIFFS.h
-- ArduinoJson
+📌 WiFi.h – Wi-Fi connection
+📌 WiFiClientSecure.h – Secure HTTP requests
+📌 HTTPClient.h – HTTP communication
+📌 WebServer.h – Web interface
+📌 SPIFFS.h – File storage
+📌 ArduinoJson – JSON parsing
 
-## Installation
 
-1. **Clone the repository:**
+---
 
-   ```bash
-   git clone https://github.com/yourusername/ESP32-Uptime-Monitor.git
-   ```
+📂 File Structure
 
-2. **Open the project in Arduino IDE or PlatformIO.**
-3. **Configure Wi-Fi settings** in the code or modify `config.json`.
-4. **Upload the firmware** to your ESP32.
+The project is structured as follows:
 
-## Configuration
+ESP32-Uptime-Monitor/
+│── data/                   # Files to upload to SPIFFS
+│   ├── index.html          # Web interface
+│   ├── style.css           # Optional (for future styling)
+│   ├── script.js           # Optional (for future enhancements)
+│── src/                    # Source code
+│   ├── main.ino            # Main ESP32 code
+│   ├── config.json         # Configuration file (stored in SPIFFS)
+│── .gitignore              # Ignore unnecessary files
+│── README.md               # Documentation
+│── LICENSE                 # MIT License
 
-Configuration is stored in the `config.json` file (SPIFFS). Example:
 
-```json
+---
+
+🚀 Installation
+
+1️⃣ Clone the Repository
+
+git clone https://github.com/yourusername/ESP32-Uptime-Monitor.git
+
+2️⃣ Open in Arduino IDE / PlatformIO
+
+Open main.ino in Arduino IDE.
+
+Install required ESP32 board support from the Boards Manager.
+
+
+3️⃣ Set Up SPIFFS Filesystem
+
+To upload index.html to SPIFFS:
+
+Install the ESP32 Sketch Data Upload Plugin:
+
+Download: ESP32 SPIFFS Tool
+
+Extract & place it into:
+
+Windows: C:\Users\<YourUser>\Documents\Arduino\tools
+
+Mac/Linux: ~/Arduino/tools/
+
+
+Restart Arduino IDE.
+
+Go to Tools > ESP32 Sketch Data Upload to upload files.
+
+
+
+4️⃣ Modify config.json
+
+Edit config.json inside the /data/ folder before uploading:
+
 {
-  "wifi_ssid": "YourWiFi",
-  "wifi_password": "YourPassword",
+  "wifi_ssid": "Your_WiFi_Name",
+  "wifi_password": "Your_WiFi_Password",
   "urls": [
     "https://example.com",
-    "https://arduino.cc"
-  ],
-  "ips": [
-    "8.8.8.8",
-    "1.1.1.1"
+    "https://arduino.cc",
+    "https://google.com"
   ],
   "interval": 30
 }
-```
 
-- **wifi_ssid** - Wi-Fi network name.
-- **wifi_password** - Wi-Fi password.
-- **urls** - List of URLs to monitor.
-- **ips** - List of IP addresses to monitor.
-- **interval** - Check interval in seconds.
+5️⃣ Upload the Firmware
 
-## Usage
+Select your ESP32 board in Tools > Board
 
-1. **Find the ESP32 IP address** in the serial monitor.
-2. **Access the web interface** using the ESP32 IP address in a browser.
-3. **Manage monitoring:**
-   - Add a new website by entering the URL and clicking "Add".
-   - Remove a website using the delete button.
-   - Adjust the check interval and save the settings.
+Choose the correct COM port
 
-## API Endpoints
+Click Upload 🚀
 
-- **GET /** - Serves the main HTML interface.
-- **GET /status** - Returns a JSON array with website statuses.
-- **POST /addSite** - Adds a new site to the monitoring list.
-- **POST /deleteSite** - Removes a site from the monitoring list.
-- **POST /setInterval** - Updates the monitoring interval.
 
-## Contribution
 
-We welcome contributions! If you find a bug or want to add a new feature, feel free to open an issue or submit a pull request.
+---
 
-## License
+⚙️ Configuration
 
-This project is licensed under the MIT License. See `LICENSE` for details.
+Modify settings via Web Interface or by editing config.json:
 
-## Contact
 
-For questions or suggestions, feel free to open an issue in the repository.
+---
+
+🖥️ Web Interface
+
+Once ESP32 is running, open http://[ESP32-IP]/ in a browser.
+
+Features:
+
+✔ Live Site Statuses – View real-time uptime & response times
+✔ Add/Delete Sites – Manage monitored URLs
+✔ Change Interval – Adjust monitoring frequency
+
+
+---
+
+📡 API Endpoints
+
+Example JSON response from /status:
+
+[
+  { "url": "https://example.com", "status": "Up", "response_time": 123 },
+  { "url": "https://arduino.cc", "status": "Down", "response_time": -1 }
+]
+
+
+---
+
+🤝 Contributing
+
+Contributions are welcome! 🎉
+
+1. Fork the repo
+
+
+2. Create a new branch
+
+
+3. Commit your changes
+
+
+4. Open a pull request
+
+
+
+
+---
+
+📜 License
+
+This project is licensed under the MIT License. See LICENSE for details.
+
+---
+
+🚀 Now, Flash Your ESP32 & Start Monitoring!
+
+🎯 If you found this project useful, give it a ⭐ on GitHub!
+
 
