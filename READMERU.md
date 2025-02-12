@@ -1,6 +1,8 @@
-ЯЗЫКИ / LANGUAGES  
-- Русский (текущая страница)  
-- English: https://github.com/CyberScopeToday/ESP32-Uptime-Monitor  
+## 🌍 Языки | Languages  
+
+🇷🇺 [Русский](https://github.com/CyberScopeToday/ESP32-Uptime-Monitor/blob/main/READMERU.md)  
+🇬🇧 [English](https://github.com/CyberScopeToday/ESP32-Uptime-Monitor/tree/main)  
+
 
 ------------------------------------------------------------
   
