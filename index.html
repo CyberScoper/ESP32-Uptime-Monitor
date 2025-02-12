@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESP32 Uptime Monitor</title>
+    <style>
+        @import url('https://fonts.bunny.net/css?family=press-start-2p');
+
+        body {
+            background: black;
+            color: #00ff00;
+            font-family: 'Press Start 2P', monospace;
+            text-align: center;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #00ff00;
+            text-align: center;
+        }
+
+        th {
+            background: rgba(0, 255, 0, 0.2);
+        }
+
+        .up {
+            color: #4CAF50;
+        }
+
+        .down {
+            color: #F44336;
+        }
+
+        input, button {
+            font-family: inherit;
+            background: black;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            padding: 8px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #00ff00;
+            color: black;
+        }
+
+        /* Matrix Rain Effect */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+        }
+
+        .footer a {
+            color: #00ff00;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="container">
+        <h1>ESP32 Uptime Monitor</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Website / IP</th>
+                    <th>Status</th>
+                    <th>Response Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="statusTable">
+                <tr><td colspan="4">Loading...</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Add Website / IP</h2>
+        <input type="text" id="newSite" placeholder="https://example.com">
+        <button onclick="addSite()">Add</button>
+
+        <h2>Settings</h2>
+        <label>Check Interval (sec):</label>
+        <input type="number" id="interval" value="30" min="5" max="3600">
+        <button onclick="setInterval()">Save</button>
+    </div>
+
+    <div class="footer">
+        Powered by <a href="https://github.com/CyberScopeToday" target="_blank" rel="noopener">CyberScopeToday</a>
+    </div>
+
+    <script>
+        function fetchStatus() {
+            fetch('/status')
+                .then(response => response.json())
+                .then(data => {
+                    let tableHtml = '';
+                    data.forEach((site, index) => {
+                        let statusClass = site.status === "Up" ? "up" : "down";
+                        tableHtml += <tr>
+                            <td>${site.url}</td>
+                            <td class="${statusClass}">${site.status}</td>
+                            <td>${site.response_time} ms</td>
+                            <td><button onclick="deleteSite(${index})">❌</button></td>
+                        </tr>;
+                    });
+                    document.getElementById('statusTable').innerHTML = tableHtml;
+                })
+                .catch(error => console.error('Error loading:', error));
+        }
+
+        function addSite() {
+            let url = document.getElementById('newSite').value;
+            if (!url) return alert("Enter URL");
+            fetch('/addSite', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: url=${encodeURIComponent(url)}
+            }).then(() => {
+                document.getElementById('newSite').value = '';
+                fetchStatus();
+            });
+        }
+
+        function deleteSite(index) {
+            fetch('/deleteSite', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: index=${index}
+            }).then(fetchStatus);
+        }
+
+        function setInterval() {
+            let sec = document.getElementById('interval').value;
+            fetch('/setInterval', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: sec=${sec}
+            });
+        }
+
+        setInterval(fetchStatus, 5000);
+        fetchStatus();
+    </script>
+
+    <script>
+        // Matrix Rain Effect
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let w, h;
+        let fontSize = 16;
+        let columns = 0;
+        let drops = [];
+
+        function initMatrix() {
+            w = window.innerWidth;
+            h = window.innerHeight;
+            canvas.width = w;
+            canvas.height = h;
+
+            columns = Math.floor(w / fontSize);
+            drops = [];
+
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.floor(Math.random() * -50);
+            }
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, w, h);
+
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > h && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+            requestAnimationFrame(drawMatrix);
+        }
+
+        window.addEventListener('resize', initMatrix);
+        initMatrix();
+        drawMatrix();
+    </script>
+
+    <script>
+        // Protection against code deletion
+        (function() {
+            document.addEventListener("keydown", function(e) {
+                if (e.ctrlKey && (e.key === "u" || e.key === "s" || e.key === "p")) {
+                    e.preventDefault();
+                }
+            });
+
+            document.addEventListener("contextmenu", function(e) {
+                e.preventDefault();
+            });
+        })();
+    </script>
+
+</body>
+</html>
