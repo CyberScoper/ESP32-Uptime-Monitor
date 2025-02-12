@@ -1,3 +1,9 @@
+## 🌍 Языки | Languages  
+
+🇷🇺 [Русский](https://github.com/CyberScopeToday/ESP32-Uptime-Monitor/blob/main/READMERU.md)  
+🇬🇧 [English](https://github.com/CyberScopeToday/ESP32-Uptime-Monitor/tree/main)  
+
+
 # 🌐 ESP32 Uptime Monitor  
 
 📡 ESP32 Uptime Monitor is a web-based uptime monitoring system for ESP32. It periodically checks websites and IPs, measures response times, and displays results in a retro-style web interface with a cool Matrix Rain effect. 💾  
