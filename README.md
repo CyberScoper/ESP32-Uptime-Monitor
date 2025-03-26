@@ -1,7 +1,7 @@
 ## 🌍 Языки | Languages  
 
-🇷🇺 [Русский](https://github.com/CyberScopeToday/ESP32-Uptime-Monitor/blob/main/READMERU.md)  
-🇬🇧 [English](https://github.com/CyberScopeToday/ESP32-Uptime-Monitor/tree/main)  
+🇷🇺 [Русский](https://github.com/CyberScoper/ESP32-Uptime-Monitor/blob/main/READMERU.md)  
+🇬🇧 [English](https://github.com/CyberScoper/ESP32-Uptime-Monitor/tree/main)  
 
 
 # 🌐 ESP32 Uptime Monitor  
@@ -81,7 +81,7 @@ ESP32-Uptime-Monitor/
 
 ### 1️⃣ Clone the Repository  
 
-git clone https://github.com/CyberScopeToday/ESP32-Uptime-Monitor.git  
+git clone https://github.com/CyberScoper/ESP32-Uptime-Monitor.git  
 
 ### 2️⃣ Open in Arduino IDE / PlatformIO  
 
