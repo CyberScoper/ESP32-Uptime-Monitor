@@ -1,7 +1,7 @@
 ## 🌍 Языки | Languages  
 
-🇷🇺 [Русский](https://github.com/CyberScopeToday/ESP32-Uptime-Monitor/blob/main/READMERU.md)  
-🇬🇧 [English](https://github.com/CyberScopeToday/ESP32-Uptime-Monitor/tree/main)  
+🇷🇺 [Русский](https://github.com/CyberScoper/ESP32-Uptime-Monitor/blob/main/READMERU.md)  
+🇬🇧 [English](https://github.com/CyberScoper/ESP32-Uptime-Monitor/tree/main)  
 
 
 ------------------------------------------------------------
